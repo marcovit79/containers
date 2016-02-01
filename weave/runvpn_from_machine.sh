@@ -30,8 +30,9 @@ dh dh.pem
 keepalive 10 60
 persist-key
 persist-tun
-#push "dhcp-option DNS 8.8.8.8"
-#push "dhcp-option DNS 8.8.4.4"
+
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 192.168.255.1"
 push "route 10.32.0.0 255.240.0.0"
 
 proto tcp-server
@@ -80,10 +81,7 @@ Content-Length: `wc -c client.ovpn`
 `cat client.ovpn`
 EOF
 
-#iptables -t nat -A POSTROUTING -s 192.168.255.0/24 -o eth0 -j MASQUERADE
-#iptables -t nat -A POSTROUTING -s 10.32.0.0/24 -o ethew -j MASQUERADE
+# - Routing for expose weave DNS to VPN clients
+iptables -t nat -A PREROUTING -p udp -i tun443 --dport 53  -j DNAT --to-destination 172.17.0.1:53
 
-#touch tcp443.log #udp1194.log http8080.log
-#while true ; do openvpn tcp443.conf ; done >> tcp443.log &
-#while true ; do openvpn udp1194.conf ; done >> udp1194.log &
-#tail -F *.log
+
