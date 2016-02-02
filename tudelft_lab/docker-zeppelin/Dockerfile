@@ -49,6 +49,14 @@ RUN cd zeppelin_code \
     && mvn clean package -DskipTests -Dspark.version=1.5.1 -Pspark-1.5 -Phadoop-2.6 \
                          -Pbuild-distr
 
+# - install zeppelin
+RUN cp zeppelin_code/zeppelin-distribution/target/zeppelin-0.5.6-incubating.tar.gz . \
+    && tar xvzf zeppelin-0.5.6-incubating.tar.gz \
+    && ln -s zeppelin-0.5.6-incubating zeppelin_installation \
+    && rm zeppelin-0.5.6-incubating.tar.gz
+
+# - remove compilarion directori
+#RUN rm -rf zeppelin_code
 
 ADD run.sh /scripts/
 RUN chmod u+x /scripts/run.sh
