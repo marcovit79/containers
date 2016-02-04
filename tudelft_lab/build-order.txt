@@ -1,0 +1,6 @@
+# mvit79/glusterfs-base     docker-glusterfs/gluster-base
+# mvit79/glusterfs-server   docker-glusterfs/gluster-server
+# mvit79/glusterfs-client   docker-glusterfs/gluster-client
+
+mvit79/spark-base   docker-spark/spark-base
+mvit79/spark-node   docker-spark/spark-node
