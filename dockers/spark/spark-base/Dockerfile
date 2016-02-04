@@ -26,7 +26,10 @@ RUN apt-get -y -q update && \
     &&  \
     \
     mkdir -p /mnt/spark_fs \
-    && echo "\ngluster-seed-server:spark_fs /mnt/spark_fs glusterfs defaults,_netdev 0 0" >> /etc/fstab
+    && echo "\ngluster-seed-server:spark_fs /mnt/spark_fs glusterfs defaults,_netdev 0 0" >> /etc/fstab \
+    && echo "mount /mnt/spark_fs" >> /mnt/mountspark.sh \
+    && chmod a+x /mnt/mountspark.sh \
+    && chmod u+s /mnt/mountspark.sh
 
 
 RUN useradd -ms /bin/bash spark
