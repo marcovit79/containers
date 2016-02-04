@@ -1,5 +1,7 @@
 BUILD_DIR=$1
 
+# TODO: login to docker registry (if needed)
+
 cat "${BUILD_DIR}/build-order.txt" | grep -v -E "^#" | \
 (
 	while IFS='' read -r line || [ -n "$line" ]; do

@@ -16,7 +16,6 @@ Vagrant.configure("2") do |config|
       sleep 5
     	sudo usermod -a -G docker vagrant
 
-      sudo docker login
 FINE
   
   config.vm.synced_folder "../dockers", "/docker_build"
