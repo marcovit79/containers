@@ -1,7 +1,4 @@
 BUILD_DIR=$1
-ACTION=$2
-
-echo "${ACTION}"
 
 cat "${BUILD_DIR}/build-order.txt" | grep -v -E "^#" | \
 (
@@ -9,11 +6,9 @@ cat "${BUILD_DIR}/build-order.txt" | grep -v -E "^#" | \
 
 		name=$( echo $line | sed -e 's/ .*//' )
 		path=$( echo $line | sed -e 's/.* //' )
-		echo "${ACTION} image $name from path $path"
+		echo "Image $name from path $path"
 		
-		if ( [ "x${ACTION}" = "xbuild" ] ) then
-			docker build --rm -t $name "${BUILD_DIR}/${path}"
-			docker push $name
-		fi
+		docker build --rm -t $name "${BUILD_DIR}/${path}"
+		docker push $name
 	done 
 )
