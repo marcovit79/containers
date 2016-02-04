@@ -14,6 +14,11 @@ RUN apt-get -y -q update && \
     apt-get install -y -q oracle-java8-installer && \
     update-java-alternatives -s java-8-oracle \
     \
+    \
+    && \
+    apt-get install -y -q sudo \
+    \
+    \
     && apt-get clean -y  \
     && apt-get autoclean -y  \
     && apt-get autoremove -y  \
@@ -27,9 +32,8 @@ RUN apt-get -y -q update && \
     \
     mkdir -p /mnt/spark_fs \
     && echo "\ngluster-seed-server:spark_fs /mnt/spark_fs glusterfs defaults,_netdev 0 0" >> /etc/fstab \
-    && echo "mount /mnt/spark_fs" >> /mnt/mountspark.sh \
-    && chmod a+x /mnt/mountspark.sh \
-    && chmod a+s /mnt/mountspark.sh
+    && echo "spark ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    
 
 
 RUN useradd -ms /bin/bash spark
