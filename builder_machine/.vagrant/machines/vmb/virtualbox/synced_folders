@@ -1,1 +1,0 @@
-{"virtualbox":{"/docker_build":{"guestpath":"/docker_build","hostpath":"/home/mvit/prove/containers/tudelft_lab","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/mvit/prove/containers/builder_machine","disabled":false}}}
