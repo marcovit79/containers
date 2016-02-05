@@ -3,6 +3,9 @@ trap '/tmp/spark/spark/sbin/stop-slave.sh; /tmp/spark/spark/sbin/stop-master.sh;
 
 SERVER_NAME=$1
 
+echo "Mount spark_fs"
+sudo mount /mnt/spark_fs/
+
 echo "Starting spark with parameters $1 $2"
 
 /tmp/spark/spark/sbin/stop-slave.sh
