@@ -8,11 +8,11 @@ sudo mount /mnt/spark_fs/
 
 echo "Starting spark with parameters $1 $2"
 
-/tmp/spark/spark/sbin/stop-slave.sh
-/tmp/spark/spark/sbin/stop-master.sh
+${HOME}/spark/sbin/stop-slave.sh
+${HOME}/spark/sbin/stop-master.sh
 
-/tmp/spark/spark/sbin/start-master.sh
-/tmp/spark/spark/sbin/start-slave.sh spark://${SERVER_NAME}:7077
+${HOME}/spark/sbin/start-master.sh
+${HOME}/spark/sbin/start-slave.sh spark://${SERVER_NAME}:7077
 
 
 

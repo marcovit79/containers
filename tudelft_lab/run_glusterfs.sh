@@ -1,6 +1,6 @@
 vagrant ssh vm1 -c "mkdir -p /home/vagrant/gluster1/data/spark_fs && \
                     mkdir -p /home/vagrant/gluster1/info"
-vagrant ssh vm1 -c "mkdir -p /home/vagrant/gluster2/data/spark_fs && \
+vagrant ssh vm2 -c "mkdir -p /home/vagrant/gluster2/data/spark_fs && \
                     mkdir -p /home/vagrant/gluster2/info"
 
 

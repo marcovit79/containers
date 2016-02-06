@@ -2,5 +2,6 @@ mvit79/glusterfs-base     glusterfs/base
 mvit79/glusterfs-server   glusterfs/server
 mvit79/glusterfs-client   glusterfs/client
 
-mvit79/spark-base   spark/spark-base
-mvit79/spark-node   spark/spark-node
+mvit79/spark-base      spark/spark-base
+mvit79/spark-node      spark/spark-node
+mvit79/spark-zeppelin  spark/zeppelin

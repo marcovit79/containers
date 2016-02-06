@@ -8,9 +8,18 @@ cat "${BUILD_DIR}/build-order.txt" | grep -v -E "^#" | \
 
 		name=$( echo $line | sed -e 's/ .*//' )
 		path=$( echo $line | sed -e 's/.* //' )
-		echo "Image $name from path $path"
 		
-		docker build --rm -t $name "${BUILD_DIR}/${path}"
-		docker push $name
+		if ( [ "x" != "x${name}" ] ) then
+			echo "Image $name from path ${BUILD_DIR}/$path"
+			
+			if ( [ -r "${BUILD_DIR}/${path}/builds/build-all.sh" ] ) then
+				echo "Build prerequisites"
+				( cd "${BUILD_DIR}/${path}/builds/" && sh build-all.sh )
+			fi
+
+			echo "Build and push $path"
+			docker build --rm -t $name "${BUILD_DIR}/${path}"
+			docker push $name
+		fi
 	done 
 )
