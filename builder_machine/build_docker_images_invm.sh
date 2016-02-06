@@ -1,6 +1,9 @@
 BUILD_DIR=$1
 
 # TODO: login to docker registry (if needed)
+if ( [ ! -r "${HOME}/.docker/config.json" ] ) then
+	docker login
+fi
 
 cat "${BUILD_DIR}/build-order.txt" | grep -v -E "^#" | \
 (
