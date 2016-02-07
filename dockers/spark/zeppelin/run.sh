@@ -1,5 +1,5 @@
 #!/bin/bash
-trap ' /home/zeppelin/zeppelin_installation/bin/zeppelin-daemon.sh stop ; exit' TERM
+trap '/home/zeppelin/zeppelin_installation/bin/zeppelin-daemon.sh stop ; exit' TERM
 
 
 zeppelin_installation/bin/zeppelin-daemon.sh start

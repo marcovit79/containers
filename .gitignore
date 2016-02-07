@@ -1,3 +1,6 @@
 */.vagrant/
 weave/.vagrant/
 weave/client.ovpn
+
+dockers/spark/zeppelin/builds/*.tar.gz
+
