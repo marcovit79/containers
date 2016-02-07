@@ -82,6 +82,16 @@ Content-Length: `wc -c client.ovpn`
 EOF
 
 # - Routing for expose weave DNS to VPN clients
-iptables -t nat -A PREROUTING -p udp -i tun443 --dport 53  -j DNAT --to-destination 172.17.0.1:53
+to_remove=$( iptables -t nat -L PREROUTING \
+	           | tail -n +3 | grep -n -E ".*" | grep -E ":53$" \
+	           | sed -e 's/:.*//' | sort -n -r )
+
+for num in $to_remove ; do
+	iptables -t nat -D PREROUTING $num
+done
+
+ip=$( ip -f inet -o addr show docker0 | awk ' {print $4}' | sed -e 's/\/.*//' )
+iptables -t nat -A PREROUTING -p udp -i tun443 --dport 53  -j DNAT --to-destination $ip:53
+iptables -t nat -A PREROUTING -p tcp -i tun443 --dport 53  -j DNAT --to-destination $ip:53
 
 
