@@ -14,9 +14,10 @@ Vagrant.configure("2") do |config|
       sudo apt-get install -qy openvpn iptables socat curl openssh-server
 
       echo "Install docker"
-      sudo wget -qO- https://get.docker.com/ > docker_install
-      sudo chmod u+x docker_install
-      sudo ./docker_install
+      sudo apt-get install -y -q docker.io
+      #sudo wget -qO- https://get.docker.com/ > docker_install
+      #sudo chmod u+x docker_install
+      #sudo ./docker_install
       sleep 5
     	sudo usermod -a -G docker vagrant
 
@@ -42,7 +43,7 @@ FINE
     vm1.vm.hostname = "vm1"
 
     vm1.vm.provider "virtualbox" do |v|
-      v.memory = 2048
+      v.memory = 3072
       v.cpus = 2
     end
   end
@@ -52,7 +53,7 @@ FINE
     vm2.vm.hostname = "vm2"
 
     vm2.vm.provider "virtualbox" do |v|
-      v.memory = 2048
+      v.memory = 3072
       v.cpus = 1
     end
   end
