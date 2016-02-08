@@ -7,6 +7,7 @@ echo "Mount spark_fs"
 sudo mount /mnt/spark_fs/
 
 echo "Starting spark with parameters $1 $2"
+export SPARK_HOME="${HOME}/spark/"
 
 ${HOME}/spark/sbin/stop-slave.sh
 ${HOME}/spark/sbin/stop-master.sh
