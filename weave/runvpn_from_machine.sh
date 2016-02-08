@@ -23,10 +23,10 @@ chmod 600 key.pem
 server 192.168.255.0 255.255.255.128
 verb 3
 duplicate-cn
-key key.pem
-ca cert.pem
-cert cert.pem
-dh dh.pem
+key /etc/openvpn/key.pem
+ca /etc/openvpn/cert.pem
+cert /etc/openvpn/cert.pem
+dh /etc/openvpn/dh.pem
 keepalive 10 60
 persist-key
 persist-tun
