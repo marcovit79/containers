@@ -1,7 +1,7 @@
 #!/bin/bash
 trap '/tmp/spark/spark/sbin/stop-slave.sh; /tmp/spark/spark/sbin/stop-master.sh; exit' TERM
 
-SERVER_NAME=$1
+SPARK_MASTER_SERVER_NAME=$1
 
 echo "Mount spark_fs"
 sudo mount /mnt/spark_fs/
@@ -12,12 +12,14 @@ export SPARK_HOME="${HOME}/spark/"
 ${HOME}/spark/sbin/stop-slave.sh
 ${HOME}/spark/sbin/stop-master.sh
 
-if ( [ "x" = "x${SERVER_NAME}" ] ) then 
+if ( [ "x" = "x${SPARK_MASTER_SERVER_NAME}" ] ) then 
 	${HOME}/spark/sbin/start-master.sh
 else
-	${HOME}/spark/sbin/start-slave.sh spark://${SERVER_NAME}:7077
+	sleep 10
+	${HOME}/spark/sbin/start-slave.sh spark://${SPARK_MASTER_SERVER_NAME}:7077
 fi
 
+sleep 10
 
 
 # keep live the container - bash check signals only between sleep
