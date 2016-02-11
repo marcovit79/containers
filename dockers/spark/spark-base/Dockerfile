@@ -16,7 +16,12 @@ RUN apt-get -y -q update && \
     \
     \
     && \
-    apt-get install -y -q sudo dumb-init \
+    apt-get install -y -q sudo \
+    \
+    \
+    && \
+    wget https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64.deb && \
+    dpkg -i dumb-init_*.deb \
     \
     \
     && apt-get clean -y  \

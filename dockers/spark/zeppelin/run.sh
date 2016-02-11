@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/dumb-init /bin/bash
 trap '/home/zeppelin/zeppelin_installation/bin/zeppelin-daemon.sh stop ; exit' TERM
 
 echo "Mount spark_fs"
