@@ -12,8 +12,11 @@ export SPARK_HOME="${HOME}/spark/"
 ${HOME}/spark/sbin/stop-slave.sh
 ${HOME}/spark/sbin/stop-master.sh
 
-${HOME}/spark/sbin/start-master.sh
-${HOME}/spark/sbin/start-slave.sh spark://${SERVER_NAME}:7077
+if ( [ "x" = "x${SERVER_NAME}" ] ) then 
+	${HOME}/spark/sbin/start-master.sh
+else
+	${HOME}/spark/sbin/start-slave.sh spark://${SERVER_NAME}:7077
+fi
 
 
 
