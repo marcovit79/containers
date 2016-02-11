@@ -16,7 +16,7 @@ RUN apt-get -y -q update && \
     \
     \
     && \
-    apt-get install -y -q sudo \
+    apt-get install -y -q sudo dumb-init \
     \
     \
     && apt-get clean -y  \

@@ -6,4 +6,4 @@ COPY run.sh /scripts/
 RUN chmod a+x /scripts/run.sh
 USER spark
 
-ENTRYPOINT ["/scripts/run.sh"]
+ENTRYPOINT ["dumb-init", "/scripts/run.sh"]
