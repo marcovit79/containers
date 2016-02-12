@@ -5,7 +5,7 @@ USER root
 
 # - install zeppelin
 ADD builds/zeppelin-0.5.6-incubating.tar.gz .
-CP zeppelin-env.sh zeppelin-site.xml zeppelin-0.5.6-incubating/conf
+COPY zeppelin-env.sh zeppelin-site.xml zeppelin-0.5.6-incubating/conf
 
 RUN chown -R spark:spark zeppelin-0.5.6-incubating \
  && ln -s zeppelin-0.5.6-incubating zeppelin_installation \
