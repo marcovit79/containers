@@ -7,5 +7,5 @@ vagrant ssh vm2 -c "\$( ./weave env ) && \
                           --add-host gluster-seed-server:\$( ./weave dns-lookup glusterserver2 ) \
                           --privileged \
                           --name zeppelin1 \
-                          mvit79/spark-zeppelin"
+                          mvit79/spark-zeppelin spark-master"
 
