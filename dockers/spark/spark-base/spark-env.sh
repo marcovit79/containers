@@ -9,7 +9,7 @@
 # - SPARK_LOCAL_IP, to set the IP address Spark binds to on this node
 # - SPARK_PUBLIC_DNS, to set the public dns name of the driver program
 # - SPARK_CLASSPATH, default classpath entries to append
-SPARK_CLASSPATH=/tmp/spark/spark/lib/glusterfs-hadoop-2.3.13.jar
+#SPARK_CLASSPATH=/tmp/spark/spark/lib/glusterfs-hadoop-2.3.13.jar
 
 # Options read by executors and drivers running inside the cluster
 # - SPARK_LOCAL_IP, to set the IP address Spark binds to on this node

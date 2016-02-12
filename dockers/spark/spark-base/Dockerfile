@@ -49,7 +49,9 @@ WORKDIR /home/spark
 RUN wget -qO- http://ftp.tudelft.nl/apache/spark/spark-1.5.1/spark-1.5.1-bin-hadoop2.6.tgz \
          | tar xvz && mv spark-1.5.1-bin-hadoop2.6 spark && \
     cd spark/lib && \
-    wget http://central.maven.org/maven2/org/gluster/glusterfs-hadoop/2.3.13/glusterfs-hadoop-2.3.13.jar
+    wget http://central.maven.org/maven2/org/gluster/glusterfs-hadoop/2.3.13/glusterfs-hadoop-2.3.13.jar \
+    && \
+    jar xf  glusterfs-hadoop-2.3.13.jar && jar uf spark-assembly-1.5.1-hadoop2.6.0.jar org && rm -rf org 
 
 # - config spark
 ADD core-site.xml spark/conf
