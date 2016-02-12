@@ -5,6 +5,9 @@ echo "Mount spark_fs"
 sudo mount /mnt/spark_fs/
 
 echo "Start zeppelin"
+if ( [ "x" != "x${1}"] ) then
+	export MASTER=spark://${1}:7077
+fi
 zeppelin_installation/bin/zeppelin-daemon.sh start
 
 # keep live the container - bash check signals only between sleep
