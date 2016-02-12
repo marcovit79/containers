@@ -5,7 +5,7 @@ USER root
 
 # - install zeppelin
 ADD builds/zeppelin-0.5.6-incubating.tar.gz .
-COPY zeppelin-env.sh zeppelin-site.xml zeppelin-0.5.6-incubating/conf
+COPY zeppelin-env.sh zeppelin-site.xml zeppelin-0.5.6-incubating/conf/
 
 RUN chown -R spark:spark zeppelin-0.5.6-incubating \
  && ln -s zeppelin-0.5.6-incubating zeppelin_installation \
@@ -15,5 +15,5 @@ COPY run.sh /scripts/
 RUN chmod a+x /scripts/run.sh 
 USER spark
 
-ENTRYPOINT ["/usr/bin/dumb-init", /scripts/run.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "/scripts/run.sh"]
 
