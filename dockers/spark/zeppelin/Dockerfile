@@ -5,7 +5,13 @@ USER root
 
 # - install zeppelin
 ADD builds/zeppelin-0.5.6-incubating.tar.gz .
-COPY zeppelin-env.sh zeppelin-site.xml zeppelin-0.5.6-incubating/conf/
+
+# - add glusterfs
+RUN cd zeppelin-0.5.6-incubating/interpreter/spark/dep && \
+    wget http://central.maven.org/maven2/org/gluster/glusterfs-hadoop/2.3.13/glusterfs-hadoop-2.3.13.jar \
+    && \
+    jar xf  glusterfs-hadoop-2.3.13.jar && jar uf zeppelin-spark-dependencies-0.5.6-incubating.jar org -C /home/spark/spark/conf core-site.xml \
+    && rm -rf org 
 
 RUN chown -R spark:spark zeppelin-0.5.6-incubating \
  && ln -s zeppelin-0.5.6-incubating zeppelin_installation \
