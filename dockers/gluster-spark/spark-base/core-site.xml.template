@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+
+<configuration>
+
+
+<!-- file system properties -->
+
+<property>
+  <name>fs.glusterfs.impl</name>
+  <value>org.apache.hadoop.fs.glusterfs.GlusterFileSystem</value>
+</property>
+<property>
+  <name>fs.glusterfs.volumes</name>
+  <value>spark_fs</value>
+</property>
+<property>
+  <name>fs.glusterfs.volume.fuse.spark_fs</name>
+  <value>SPARK_FS_PATH</value>
+</property>
+
+
+<property>
+  <name>fs.defaultFS</name>
+  <value>glusterfs:///</value>
+  <description>The name of the default file system.  A URI whose
+  scheme and authority determine the FileSystem implementation.  The
+  uri's scheme determines the config property (fs.SCHEME.impl) naming
+  the FileSystem implementation class.  The uri's authority is used to
+  determine the host, port, etc. for a filesystem.</description>
+</property>
+
+<property>
+  <name>fs.default.name</name>
+  <value>glusterfs:///</value>
+  <description>Deprecated. Use (fs.defaultFS) property
+  instead</description>
+</property>
+
+<property>
+  <name>fs.AbstractFileSystem.file.impl</name>
+  <value>org.apache.hadoop.fs.local.LocalFs</value>
+  <description>The AbstractFileSystem for file: uris.</description>
+</property>
+
+<property>
+  <name>fs.AbstractFileSystem.har.impl</name>
+  <value>org.apache.hadoop.fs.HarFs</value>
+  <description>The AbstractFileSystem for har: uris.</description>
+</property> 
+
+<property>
+  <name>fs.AbstractFileSystem.hdfs.impl</name>
+  <value>org.apache.hadoop.fs.Hdfs</value>
+  <description>The FileSystem for hdfs: uris.</description>
+</property>
+
+<property>
+  <name>fs.AbstractFileSystem.viewfs.impl</name>
+  <value>org.apache.hadoop.fs.viewfs.ViewFs</value>
+  <description>The AbstractFileSystem for view file system for viewfs: uris
+  (ie client side mount table:).</description>
+</property>
+
+</configuration>

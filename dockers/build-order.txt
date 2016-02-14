@@ -1,7 +1,17 @@
-mvit79/glusterfs-base     glusterfs/base
-mvit79/glusterfs-server   glusterfs/server
-mvit79/glusterfs-client   glusterfs/client
+# - Based on debian jessie; add repository gluster e oracle-java 
+#   and make system upgrade from 
+mvit79/gluster-spark:base        gluster-spark/base
 
-mvit79/spark-base      spark/spark-base
-mvit79/spark-node      spark/spark-node
-mvit79/spark-zeppelin  spark/zeppelin
+# - Install gluster and init script for gluster daemon
+mvit79/gluster-spark:fs-server   gluster-spark/fs-server
+
+
+# - Install gluster client and tools used from GlusterFS-HDFS bindings
+#   and define spark and hadoop versions
+mvit79/gluster-spark:spark-base  gluster-spark/spark-base
+
+# - Prepare gluster standalone cluster
+mvit79/gluster-spark:spark-node  gluster-spark/spark-node
+
+
+#mvit79/spark-zeppelin  spark/zeppelin

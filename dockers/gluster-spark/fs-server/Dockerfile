@@ -1,4 +1,4 @@
-FROM mvit79/glusterfs-base
+FROM mvit79/gluster-spark:base
 
 
 RUN apt-get update && apt-get install -y glusterfs-server xfsprogs \

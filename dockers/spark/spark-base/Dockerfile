@@ -1,4 +1,4 @@
-FROM mvit79/glusterfs-client
+FROM mvit79/glusterfs:client
 
 # - Add repository for oracle java
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" \
