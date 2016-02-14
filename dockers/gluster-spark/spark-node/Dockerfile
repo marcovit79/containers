@@ -24,7 +24,7 @@ RUN hdp_ver=${HADOOP_VERSION%\.[0-9]*} \
     && cd spark/lib \
     && mkdir extension && cd extension \
     && for url in "$SPARK_INTERNAL_EXTENSIONS_URLS" ; do \
-       wget -O - $url > /dev/null ; \
+       wget -O - $url | jar x ; \
     done \
     && cd .. && jar uf spark-assembly-${SPARK_VERSION}-hadoop${HADOOP_VERSION}.jar -C extension . 
 
