@@ -1,10 +1,47 @@
 #!/bin/bash
 trap '/tmp/spark/spark/sbin/stop-slave.sh; /tmp/spark/spark/sbin/stop-master.sh; exit' TERM
 
-SPARK_MASTER_SERVER_NAME=$1
+# - Parse arguments for mounting gluster
+GLUSTER_SEED_SERVER="gluster-seed-server"
+GLUSTER_VOLUME="set-spark-volume"
+SPARK_FS_MOUNT_POINT="/mnt/spark_fs"
 
+for arg in "$@"
+do
+	case $arg in
+		--gluster-fs=*)
+			server_and_vol=${arg#--gluster-fs=}
+			GLUSTER_SEED_SERVER=${vol_and_path%%:*}
+			GLUSTER_VOLUME=${vol_and_path#[^:]*:}
+		;;
+		*)
+		--gluster-fs=*)
+			server_and_vol=${arg#--gluster-fs=}
+			GLUSTER_SEED_SERVER=${vol_and_path%%:*}
+			GLUSTER_VOLUME=${vol_and_path#[^:]*:}
+		;;
+	esac
+done
+
+# - Mount gluster
 echo "Mount spark_fs"
-sudo mount /mnt/spark_fs/
+sudo mkdir -p /mnt/spark_fs
+sudo mount -t glusterfs "${GLUSTER_SEED_SERVER}:${GLUSTER_VOLUME}" "${SPARK_FS_MOUNT_POINT}"
+
+
+
+# - Parse arguments for spark. If parameters specify a spark-master this node is spark worker
+SPARK_MASTER_SERVER_NAME=""
+
+for arg in "$@"
+do
+	case $arg in
+		--spark-master=*)
+			SPARK_MASTER_SERVER_NAME=${arg#--spark-master=}
+		;;
+	esac
+done
+
 
 echo "Starting spark with parameters $1 $2"
 export SPARK_HOME="${HOME}/spark/"

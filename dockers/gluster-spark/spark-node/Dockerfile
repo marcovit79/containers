@@ -28,7 +28,7 @@ RUN hdp_ver=${HADOOP_VERSION%\.[0-9]*} \
     done \
     && cd .. && jar uf spark-assembly-${SPARK_VERSION}-hadoop${HADOOP_VERSION}.jar -C extension . 
 
-#COPY run.sh /scripts/
-#RUN sudo chmod a+x /scripts/run.sh
+COPY run.sh /scripts/
+RUN sudo chmod a+x /scripts/run.sh
 
-#ENTRYPOINT ["/usr/bin/dumb-init", "/scripts/run.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "/scripts/run.sh"]
