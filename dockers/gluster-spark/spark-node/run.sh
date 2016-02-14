@@ -14,18 +14,15 @@ do
 			GLUSTER_SEED_SERVER=${vol_and_path%%:*}
 			GLUSTER_VOLUME=${vol_and_path#[^:]*:}
 		;;
-		*)
-		--gluster-fs=*)
-			server_and_vol=${arg#--gluster-fs=}
-			GLUSTER_SEED_SERVER=${vol_and_path%%:*}
-			GLUSTER_VOLUME=${vol_and_path#[^:]*:}
+		--gluster-fs-mount=*)
+			SPARK_FS_MOUNT_POINT=${arg#--gluster-fs-mount=}
 		;;
 	esac
 done
 
 # - Mount gluster
-echo "Mount spark_fs"
-sudo mkdir -p /mnt/spark_fs
+echo "Mount ${GLUSTER_SEED_SERVER}:${GLUSTER_VOLUME} into ${SPARK_FS_MOUNT_POINT}"
+sudo mkdir -p "${SPARK_FS_MOUNT_POINT}"
 sudo mount -t glusterfs "${GLUSTER_SEED_SERVER}:${GLUSTER_VOLUME}" "${SPARK_FS_MOUNT_POINT}"
 
 
@@ -43,7 +40,7 @@ do
 done
 
 
-echo "Starting spark with parameters $1 $2"
+echo "Starting spark with master ${SPARK_MASTER_SERVER_NAME} "
 export SPARK_HOME="${HOME}/spark/"
 
 ${HOME}/spark/sbin/stop-slave.sh
