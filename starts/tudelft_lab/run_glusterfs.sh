@@ -13,10 +13,10 @@ vagrant ssh vm1 -c "\$( ./weave env ) && \
 docker run --privileged -d --name glusterserver1       \
 	-v /home/vagrant/gluster1/data/:/glusterd/           \
 	-v /home/vagrant/gluster1/info/:/var/lib/glusterd/   \
-	mvit79/gluster-spark:fs-server glusterserver2 "
+	mvit79/gluster-spark:fs-server glusterserver2 glusterserver1 "
 
 vagrant ssh vm2 -c "\$( ./weave env ) && \
 docker run --privileged -d --name glusterserver2         \
 	-v /home/vagrant/gluster2/data/:/glusterd/           \
 	-v /home/vagrant/gluster2/info/:/var/lib/glusterd/   \
-	mvit79/gluster-spark:fs-server glusterserver1 --start-vol=spark_fs:/glusterd/spark_fs"
+	mvit79/gluster-spark:fs-server glusterserver1 glusterserver2 --start-vol=spark_fs:/glusterd/spark_fs"
