@@ -11,8 +11,8 @@ do
 	case $arg in
 		--gluster-fs=*)
 			server_and_vol=${arg#--gluster-fs=}
-			GLUSTER_SEED_SERVER=${vol_and_path%%:*}
-			GLUSTER_VOLUME=${vol_and_path#[^:]*:}
+			GLUSTER_SEED_SERVER=${server_and_vol%%:*}
+			GLUSTER_VOLUME=${server_and_vol#[^:]*:}
 		;;
 		--gluster-fs-mount=*)
 			SPARK_FS_MOUNT_POINT=${arg#--gluster-fs-mount=}
