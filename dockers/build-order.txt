@@ -14,4 +14,4 @@ mvit79/gluster-spark:spark-base  gluster-spark/spark-base
 mvit79/gluster-spark:spark-node  gluster-spark/spark-node
 
 
-#mvit79/spark-zeppelin  spark/zeppelin
+mvit79/spark-zeppelin  spark/zeppelin
