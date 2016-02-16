@@ -1,25 +1,28 @@
-FROM mvit79/spark-base
+FROM mvit79/gluster-spark:spark-base
 
-# - FIXME: That user switch is very weird see https://github.com/docker/docker/issues/7537
-USER root
+# - Create zeppelin user with passwordless sudo. The passwordless sudo is needed 
+#    by the GlusterFS-HDFS implementation
+RUN useradd -ms /bin/bash zeppelin && echo "zeppelin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER zeppelin
+WORKDIR /home/zeppelin
 
-# - install zeppelin
-ADD builds/zeppelin-0.5.6-incubating.tar.gz .
+COPY builds/*.tar.gz /tmp/zeppelin-tgz/
 
-# - add glusterfs
-RUN cd zeppelin-0.5.6-incubating/interpreter/spark/dep && \
-    wget http://central.maven.org/maven2/org/gluster/glusterfs-hadoop/2.3.13/glusterfs-hadoop-2.3.13.jar \
-    && \
-    jar xf  glusterfs-hadoop-2.3.13.jar && jar uf zeppelin-spark-dependencies-0.5.6-incubating.jar org -C /home/spark/spark/conf core-site.xml \
-    && rm -rf org 
-
-RUN chown -R spark:spark zeppelin-0.5.6-incubating \
- && ln -s zeppelin-0.5.6-incubating zeppelin_installation \
- && chown spark:spark zeppelin_installation
+# - decompress zeppelin and remove tar file
+# - add extension
+RUN tar xvzf /tmp/zeppelin-tgz/*.tar.gz \
+    && sudo rm -rf /tmp/zeppelin-tgz/ \
+    && mv zeppelin-* zeppelin \
+    \
+    \
+    && cd zeppelin/interpreter/spark/dep \
+    && mkdir extension && cd extension \
+    && for url in "$SPARK_INTERNAL_EXTENSIONS_URLS" ; do \
+       wget -O - $url | jar x ; \
+    done \
+    && cd .. && jar uf zeppelin-spark-dependencies-*.jar -C extension . 
 
 COPY run.sh /scripts/
-RUN chmod a+x /scripts/run.sh 
-USER spark
+RUN sudo chmod a+x /scripts/run.sh
 
 ENTRYPOINT ["/usr/bin/dumb-init", "/scripts/run.sh"]
-

@@ -10,8 +10,8 @@ mvit79/gluster-spark:fs-server   gluster-spark/fs-server
 #   and define spark and hadoop versions
 mvit79/gluster-spark:spark-base  gluster-spark/spark-base
 
-# - Prepare gluster standalone cluster
+# - Prepare spark standalone cluster
 mvit79/gluster-spark:spark-node  gluster-spark/spark-node
 
-
-mvit79/spark-zeppelin  spark/zeppelin
+# - Prepare zeppelin
+mvit79/gluster-spark:zeppelin  gluster-spark/zeppelin

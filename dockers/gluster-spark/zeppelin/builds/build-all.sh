@@ -5,8 +5,8 @@ docker build --rm=true -t zeppelin-build ./zeppelin
 docker stop zeppelin-build-container
 docker rm zeppelin-build-container
 
-docker run --name zeppelin-build-container zeppelin-build ls
-docker cp zeppelin-build-container:/home/builder/zeppelin-0.5.6-incubating.tar.gz .
+file=$( docker run --name zeppelin-build-container zeppelin-build ls | grep tar.gz )
+docker cp zeppelin-build-container:/home/builder/$file .
 
 docker stop zeppelin-build-container
 docker rm zeppelin-build-container

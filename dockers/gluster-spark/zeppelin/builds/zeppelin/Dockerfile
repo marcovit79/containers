@@ -1,33 +1,27 @@
-FROM ubuntu:trusty
+FROM mvit79/gluster-spark:spark-base
 
-# - Add repository for oracle java
-RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" \
-         | tee /etc/apt/sources.list.d/webupd8team-java.list && \
-    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" \
-         | tee -a /etc/apt/sources.list.d/webupd8team-java.list && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 
+ENV ZEPPELIN_VERSION=0.5.6 \
+    MAVEN_VERSION=3.3.3
 
-# - Update source repository information
-RUN apt-get update && apt-get upgrade -y -q 
+# - build package list
+RUN apt-get update
 
+# - Prepare maven url
+# - Download and install maven
+RUN mvn_tgz_name="apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
+ && mvn_mirror="http://www.eu.apache.org/" \
+ && mvn_path="dist/maven/maven-${MAVEN_VERSION%%\.*}/${MAVEN_VERSION}/binaries/" \
+ && mvn_url="${mvn_mirror}${mvn_path}${mvn_tgz_name}" \
+ \
+ && wget -O - ${mvn_url} | tar zx -C /usr/local/ \
+ && ln -s /usr/local/apache-maven-3.3.3/bin/mvn /usr/local/bin/mvn
 
-# - install oracle java (accepting the license)
-RUN apt-get -y -q update && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true \
-         | /usr/bin/debconf-set-selections && \
-    apt-get install -y -q oracle-java8-installer && \
-    update-java-alternatives -s java-8-oracle 
-
-# - install software needed to build zeppelin    
+# - install other software needed to build zeppelin    
 RUN apt-get install -y -q nodejs npm libfontconfig git wget \
-    && cd /usr/bin/ && ln -s nodejs node \
-    && npm install -g bower \
-    && npm install -g grunt
+ && cd /usr/bin/ && ln -s nodejs node \
+ && npm install -g bower \
+ && npm install -g grunt
 
-#     install maven
-RUN wget http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz \
-    && tar -zxf apache-maven-3.3.3-bin.tar.gz -C /usr/local/ \
-    && ln -s /usr/local/apache-maven-3.3.3/bin/mvn /usr/local/bin/mvn
 
 RUN useradd -ms /bin/bash builder
 USER builder
@@ -36,18 +30,24 @@ WORKDIR /home/builder
 # - clone zeppelin
 RUN git clone https://github.com/apache/incubator-zeppelin.git zeppelin_code \
     && cd zeppelin_code \
-    && git checkout v0.5.6
+    && git checkout v${ZEPPELIN_VERSION}
 
 # - Build zeppelin
 RUN cd zeppelin_code \
     && \
     ( \
-    	mvn clean package -DskipTests -Dspark.version=1.5.1 -Pspark-1.5 -Phadoop-2.6 \
-                         -Pbuild-distr \
-                         ||   \
-      mvn package -DskipTests -Dspark.version=1.5.1 -Pspark-1.5 -Phadoop-2.6 \
-                         -Pbuild-distr \
+    	mvn clean package -DskipTests \
+                          -Dspark.version=${SPARK_VERSION} \
+                          -Pspark-${SPARK_VERSION%\.[0-9]*} \
+                          -Phadoop-${HADOOP_VERSION%\.[0-9]*} \
+                          -Pbuild-distr \
+        ||   \
+        mvn package -DskipTests \
+                    -Dspark.version=${SPARK_VERSION} \
+                    -Pspark-${SPARK_VERSION%\.[0-9]*} \
+                    -Phadoop-${HADOOP_VERSION%\.[0-9]*} \
+                    -Pbuild-distr \
     )
 
-RUN cp zeppelin_code/zeppelin-distribution/target/zeppelin-0.5.6-incubating.tar.gz \
-       zeppelin-0.5.6-incubating.tar.gz
+RUN cp zeppelin_code/zeppelin-distribution/target/zeppelin-${ZEPPELIN_VERSION}-incubating.tar.gz \
+       zeppelin-${ZEPPELIN_VERSION}.tar.gz
