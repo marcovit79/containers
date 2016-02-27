@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-ENV GLUSTER_VERSION=3.7.2
+ENV GLUSTER_VERSION=3.6.8
 
 # - Update and upgrade packages
 # - Define GlusterFS repositories
