@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-ENV GLUSTER_VERSION=3.6.8
+ENV GLUSTER_VERSION=3.7.8
 
 # - Update and upgrade packages
 # - Define GlusterFS repositories
@@ -10,7 +10,7 @@ ENV GLUSTER_VERSION=3.6.8
 # - Reduce image size
 RUN apt-get update \
     && apt-get upgrade -y -q \
-    && apt-get install -y -q wget \
+    && apt-get install -y -q ca-certificates wget \
     \
     \
     && GLUSTER_REPO_BASE_URL="http://download.gluster.org/pub/gluster/glusterfs" \
@@ -18,7 +18,7 @@ RUN apt-get update \
     && GLUSTER_REPO_URL="${GLUSTER_REPO_BASE_URL}/${GLUSTER_REPO_VERSION}/Debian/jessie" \
     \
     \
-    && wget -O - "${GLUSTER_REPO_URL}/pub.key" | apt-key add - \
+    && wget -O - "${GLUSTER_REPO_BASE_URL}/${GLUSTER_REPO_VERSION}/pub.key" | apt-key add - \
     && echo deb "${GLUSTER_REPO_URL}/apt jessie main" > /etc/apt/sources.list.d/gluster.list \
     && apt-get update -y -q \
     \
