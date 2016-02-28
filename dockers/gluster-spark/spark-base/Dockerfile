@@ -35,4 +35,5 @@ RUN apt-get -y -q update \
     && rm /var/cache/oracle-jdk8-installer/*.tar.gz \
     && rm -rf /tmp/* 
 
-ADD core-site.xml.template /etc/spark/
+COPY core-site.xml.template /etc/spark/
+COPY prepare_spark_env.sh /scripts/
