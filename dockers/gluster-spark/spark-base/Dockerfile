@@ -1,7 +1,7 @@
 FROM mvit79/gluster-spark:base
 
 ENV JAVA_VERSION=8
-ENV SPARK_VERSION=1.5.1
+ENV SPARK_VERSION=1.6.0
 ENV HADOOP_VERSION=2.6.0
 ENV SPARK_INTERNAL_EXTENSIONS_URLS="http://central.maven.org/maven2/org/gluster/glusterfs-hadoop/2.3.13/glusterfs-hadoop-2.3.13.jar"
 
