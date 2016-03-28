@@ -15,3 +15,9 @@ mvit79/gluster-spark:spark-node  gluster-spark/spark-node
 
 # - Prepare zeppelin
 mvit79/gluster-spark:zeppelin  gluster-spark/zeppelin
+
+
+
+# - Build dontpanic
+mvit79/4home:dontpanic  torrents/dontpanic
+

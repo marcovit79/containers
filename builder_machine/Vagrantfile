@@ -16,11 +16,13 @@ Vagrant.configure("2") do |config|
       sleep 5
     	sudo usermod -a -G docker vagrant
 
+      sudo apt-get install -y firefox
 FINE
   
   config.vm.synced_folder "../dockers", "/docker_build"
   
   config.vm.define "vmb" do |vmb|
+    vmb.ssh.forward_x11 = true
     vmb.vm.provider "virtualbox" do |v|
       v.memory = 4096
       v.cpus = 2
